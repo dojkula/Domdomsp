@@ -1,64 +1,48 @@
-const prefersReducedMotion =
-  typeof window !== 'undefined'
-    ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    : false
-
-const dur = (ms: number) => (prefersReducedMotion ? 0 : ms)
+export const ease = [0.22, 1, 0.36, 1] as const
 
 export const fadeUp = {
-  hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 40 },
-  visible: (delay = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: dur(0.6), delay, ease: [0.22, 1, 0.36, 1] },
+  hidden: { opacity: 0, y: 48 },
+  show: (i = 0) => ({
+    opacity: 1, y: 0,
+    transition: { duration: 0.7, delay: i * 0.1, ease },
   }),
 }
 
 export const fadeIn = {
   hidden: { opacity: 0 },
-  visible: (delay = 0) => ({
+  show: (i = 0) => ({
     opacity: 1,
-    transition: { duration: dur(0.5), delay },
+    transition: { duration: 0.55, delay: i * 0.1 },
   }),
 }
 
-export const scaleIn = {
-  hidden: { opacity: 0, scale: prefersReducedMotion ? 1 : 0.85 },
-  visible: (delay = 0) => ({
-    opacity: 1,
-    scale: 1,
-    transition: { duration: dur(0.5), delay, type: 'spring', stiffness: 300, damping: 24 },
-  }),
-}
-
-export const slideRight = {
-  hidden: { opacity: 0, x: prefersReducedMotion ? 0 : -40 },
-  visible: (delay = 0) => ({
-    opacity: 1,
-    x: 0,
-    transition: { duration: dur(0.6), delay, ease: [0.22, 1, 0.36, 1] },
+export const scaleUp = {
+  hidden: { opacity: 0, scale: 0.88 },
+  show: (i = 0) => ({
+    opacity: 1, scale: 1,
+    transition: { duration: 0.55, delay: i * 0.1, type: 'spring', stiffness: 280, damping: 22 },
   }),
 }
 
 export const slideLeft = {
-  hidden: { opacity: 0, x: prefersReducedMotion ? 0 : 40 },
-  visible: (delay = 0) => ({
-    opacity: 1,
-    x: 0,
-    transition: { duration: dur(0.6), delay, ease: [0.22, 1, 0.36, 1] },
+  hidden: { opacity: 0, x: 60 },
+  show: (i = 0) => ({
+    opacity: 1, x: 0,
+    transition: { duration: 0.7, delay: i * 0.1, ease },
+  }),
+}
+
+export const slideRight = {
+  hidden: { opacity: 0, x: -60 },
+  show: (i = 0) => ({
+    opacity: 1, x: 0,
+    transition: { duration: 0.7, delay: i * 0.1, ease },
   }),
 }
 
 export const stagger = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.1 } },
+  show: { transition: { staggerChildren: 0.1 } },
 }
 
-export const cardHover = {
-  rest: { y: 0, boxShadow: '0 8px 32px rgba(30,27,75,0.12)' },
-  hover: {
-    y: -8,
-    boxShadow: '0 20px 48px rgba(124,58,237,0.25)',
-    transition: { type: 'spring', stiffness: 400, damping: 20 },
-  },
-}
+export const vp = { once: true, amount: 0.18 }

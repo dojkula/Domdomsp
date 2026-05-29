@@ -13,8 +13,8 @@ class RootErrorBoundary extends Component<{ children: ReactNode }, { error: bool
   static getDerivedStateFromError() { return { error: true } }
   render() {
     if (this.state.error) return (
-      <div className="min-h-screen flex items-center justify-center bg-brand-light">
-        <p className="font-display text-brand-violet text-xl">Ups, prišlo je do napake. Osvežite stran.</p>
+      <div className="min-h-screen flex items-center justify-center bg-off">
+        <p className="font-display text-navy-900 text-xl">Ups, prišlo je do napake. Osvežite stran.</p>
       </div>
     )
     return this.props.children
