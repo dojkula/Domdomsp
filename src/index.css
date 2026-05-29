@@ -1,0 +1,125 @@
+@charset "UTF-8";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --brand-violet: #7c3aed;
+    --brand-violet-light: #a78bfa;
+    --brand-dark: #1e1b4b;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #faf5ff;
+    color: #1e1b4b;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Syne', sans-serif;
+  }
+}
+
+@layer components {
+  .section-pad {
+    @apply py-20 px-6 md:px-12 lg:px-20;
+  }
+
+  .blob {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+
+  .glass {
+    background: rgba(250, 245, 255, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(124, 58, 237, 0.12);
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 bg-brand-violet text-white font-display font-semibold px-7 py-3.5 rounded-full shadow-violet-sm transition-all duration-300;
+  }
+
+  .btn-primary:hover {
+    @apply shadow-violet-glow -translate-y-0.5;
+    background: #5b21b6;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 border-2 border-brand-violet text-brand-violet font-display font-semibold px-7 py-3.5 rounded-full transition-all duration-300;
+  }
+
+  .btn-secondary:hover {
+    @apply bg-brand-violet text-white -translate-y-0.5;
+  }
+}
+
+/* Organic blob background shapes */
+.bg-blob-1 {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.12) 0%, transparent 70%);
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  animation: morphBlob 12s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.bg-blob-2 {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, transparent 70%);
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+  animation: morphBlob 16s ease-in-out infinite reverse;
+  pointer-events: none;
+}
+
+@keyframes morphBlob {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  50% { border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%; }
+  75% { border-radius: 60% 40% 60% 30% / 70% 30% 50% 60%; }
+}
+
+/* Sparkle dots */
+.sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #a78bfa;
+  animation: sparklePop 3s ease-in-out infinite;
+}
+
+@keyframes sparklePop {
+  0%, 100% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1); opacity: 1; }
+}
+
+/* Three.js canvas */
+canvas {
+  touch-action: none;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
