@@ -1,7 +1,21 @@
-import { Suspense, useRef } from 'react'
+import { Suspense, useRef, Component, ReactNode } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { OrbitControls, Environment, Float, ContactShadows } from '@react-three/drei'
+import { OrbitControls, Float, ContactShadows } from '@react-three/drei'
 import * as THREE from 'three'
+
+class SceneErrorBoundary extends Component<{ children: ReactNode }, { error: boolean }> {
+  state = { error: false }
+  static getDerivedStateFromError() { return { error: true } }
+  render() {
+    if (this.state.error) return (
+      <div className="h-[520px] flex flex-col items-center justify-center text-brand-violet/50 gap-3">
+        <span className="text-5xl">🧹</span>
+        <p className="font-display text-sm">3D scene unavailable in this browser</p>
+      </div>
+    )
+    return this.props.children
+  }
+}
 
 // ─── Toon Material helper ───────────────────────────────────────────────────
 function toon(color: string, steps = 4) {
@@ -319,6 +333,7 @@ function Sparkles() {
 // ─── Main exported scene ─────────────────────────────────────────────────────
 export function CharacterScene() {
   return (
+    <SceneErrorBoundary>
     <div className="w-full h-[520px] md:h-[600px]">
       <Canvas
         camera={{ position: [0, 0.2, 5.5], fov: 42 }}
@@ -339,7 +354,6 @@ export function CharacterScene() {
           </Float>
           <Sparkles />
           <ContactShadows position={[0, -2.0, 0]} opacity={0.25} scale={6} blur={2} />
-          <Environment preset="city" />
         </Suspense>
 
         <OrbitControls
@@ -351,5 +365,6 @@ export function CharacterScene() {
         />
       </Canvas>
     </div>
+    </SceneErrorBoundary>
   )
 }
